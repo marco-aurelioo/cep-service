@@ -6,7 +6,7 @@ import com.service.cep.entity.CepEntity;
 import com.service.cep.repository.CepRepository;
 import javassist.NotFoundException;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -14,6 +14,7 @@ import java.util.Optional;
 @Service
 public class CepService {
 
+    @Autowired
     public CepService(CepRepository cepRepository,
                       CepConverter converter){
         this.repository = cepRepository;
@@ -21,6 +22,7 @@ public class CepService {
     }
 
     private CepConverter converter;
+
     private CepRepository repository;
 
 
@@ -31,7 +33,7 @@ public class CepService {
     private CepDto recursiveFind(String cep, int zeros) throws NotFoundException {
         Optional<CepEntity> byCep = repository.findByCep(cep);
         if(byCep.isPresent()){
-           return converter.convertFromEntity(byCep.get());
+           return converter.fromEntity(byCep.get());
         }else{
             if(zeros == 8){
                 throw new NotFoundException("cep: '"+cep+"'");
@@ -42,9 +44,4 @@ public class CepService {
             return recursiveFind(cepToFind,zeros);
         }
     }
-
-
-
-
-
 }

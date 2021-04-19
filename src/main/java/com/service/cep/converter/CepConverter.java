@@ -5,22 +5,16 @@ import com.service.cep.entity.CepEntity;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
-import java.util.function.Function;
-
 @Component
-public class CepConverter extends Converter<CepEntity, CepDto> {
+public class CepConverter {
 
-    public CepConverter(Function<CepDto, CepEntity> fromDto, Function<CepEntity, CepDto> fromEntity) {
-        super(CepConverter::fromDto, CepConverter::fromEntity);
-    }
-
-    public static CepEntity fromDto(CepDto dto){
+    public CepEntity fromDto(CepDto dto){
         CepEntity entity = new CepEntity();
         BeanUtils.copyProperties( dto,entity);
         return entity;
     }
 
-    public static CepDto fromEntity(CepEntity entity) {
+    public CepDto fromEntity(CepEntity entity) {
         CepDto dto = new CepDto();
         BeanUtils.copyProperties(entity,dto);
         return dto;

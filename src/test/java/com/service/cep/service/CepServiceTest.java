@@ -1,5 +1,6 @@
 package com.service.cep.service;
 
+import com.service.cep.converter.CepConverter;
 import com.service.cep.dto.CepDto;
 import com.service.cep.entity.CepEntity;
 import com.service.cep.repository.CepRepository;
@@ -10,20 +11,25 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 @SpringBootTest
 class CepServiceTest {
 
-    @InjectMocks
+    @Autowired
     private CepService service;
 
-    @Mock
+    @MockBean
     private CepRepository repository;
+
+    @MockBean
+    private CepConverter converter;
 
     @Test
     public void validaCepNotFound() throws NotFoundException {
@@ -47,6 +53,7 @@ class CepServiceTest {
                 Optional.empty());
         Mockito.when(repository.findByCep("99999990")).thenReturn(
                 Optional.of(entity));
+        Mockito.when(converter.fromEntity(entity)).thenCallRealMethod();
 
         CepDto cep = service.findCep("99999999");
         assertEquals("rua",cep.getRua());
