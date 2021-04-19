@@ -30,13 +30,13 @@ public class CepController {
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     ResponseEntity<String> handleConstraintViolationException(ConstraintViolationException e) {
-        return new ResponseEntity<>("invalid request: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("CEP inválido.", HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     ResponseEntity<String> handleNotFoundException(NotFoundException e) {
-        return new ResponseEntity<>("not found: " + e.getMessage(), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("CEP não encontrado.", HttpStatus.NOT_FOUND);
     }
 
 }

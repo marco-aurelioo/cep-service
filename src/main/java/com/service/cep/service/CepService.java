@@ -1,5 +1,6 @@
 package com.service.cep.service;
 
+import com.service.cep.converter.CepConverter;
 import com.service.cep.dto.CepDto;
 import com.service.cep.entity.CepEntity;
 import com.service.cep.repository.CepRepository;
@@ -13,10 +14,13 @@ import java.util.Optional;
 @Service
 public class CepService {
 
-    public CepService(CepRepository cepRepository){
+    public CepService(CepRepository cepRepository,
+                      CepConverter converter){
         this.repository = cepRepository;
+        this.converter = converter;
     }
 
+    private CepConverter converter;
     private CepRepository repository;
 
 
@@ -27,7 +31,7 @@ public class CepService {
     private CepDto recursiveFind(String cep, int zeros) throws NotFoundException {
         Optional<CepEntity> byCep = repository.findByCep(cep);
         if(byCep.isPresent()){
-           return convertEntityToDto(byCep.get());
+           return converter.convertFromEntity(byCep.get());
         }else{
             if(zeros == 8){
                 throw new NotFoundException("cep: '"+cep+"'");
@@ -39,11 +43,7 @@ public class CepService {
         }
     }
 
-    private CepDto convertEntityToDto(CepEntity cepEntity) {
-        CepDto dto = new CepDto();
-        BeanUtils.copyProperties(cepEntity,dto);
-        return dto;
-    }
+
 
 
 
