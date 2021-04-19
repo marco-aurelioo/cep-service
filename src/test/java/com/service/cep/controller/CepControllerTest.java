@@ -33,6 +33,12 @@ class CepControllerTest {
     }
 
 
+    @Test
+    public void validRequest() throws Exception {
+        String uri = "/cep/12345678";
+        mvc.perform(MockMvcRequestBuilders.get(uri))
+                .andExpect(status().is2xxSuccessful());
+    }
 
 
 
