@@ -21,9 +21,9 @@ para preencher meus dados de cadastro de forma automática.
 ### Extras:
 
 - [x] Preferencialmente use um versionador e faça commits granulares;
-- [ ] Api com autorização;
+- [x] Api com autorização;
 - [X] boas práticas de design de api;
-- [ ] Swagger com a documentação;
+- [X] Swagger com a documentação;
 - [x] Tecnologias: Java
 
 ### Extras plus plus master (não é mandatório, apenas diferencial se vc tiver tempo e conhecimento):
@@ -32,8 +32,44 @@ para preencher meus dados de cadastro de forma automática.
 - [x] Endpoint para métricas da aplicação;
 - [ ] Considere a performance do algoritmo e o tempo de resposta da aplicação, sabendo que a API  pode receber flutuações de tráfego agressivas.
 
+
+
+
+### url documentação (Swagger2):
+
+http://localhost:8080/swagger-ui/
+
+### Serviço de Autoriação:
+
+Autenticação JWT
+
+Geração usuario:
+
+```
+localhost:8080/user/create-account
+```
+
+Login:
+
+```
+localhost:8080/login
+```
+
+POSTMan file:
+
+```
+${projectdir}/postman-client/cep-magalu-exemplo.postman_collection.json
+```
+
+
+Exemplo java:
+
+
+
 ### run prometheus 
 
+Windows, arquivo de configuração em ${project}/prometheus-cfg/prometheus.yml
 
-
-docker service create --replicas 1 --name my-prometheus --mount type=bind,source=C:/Users/tiozao/workspace/cep-service/prometheus-cfg/prometheus.yml,destination=/opt/bitnami/prometheus/conf/prometheus.yml --publish published=9090,target=9090,protocol=tcp bitnami/prometheus
+```
+docker service create --replicas 1 --name my-prometheus --mount type=bind,source=${projectdir}/prometheus-cfg/prometheus.yml,destination=/opt/bitnami/prometheus/conf/prometheus.yml --publish published=9090,target=9090,protocol=tcp bitnami/prometheus
+```
